@@ -2,11 +2,19 @@ const todoForm = document.querySelector(".todos");
 const todoInput = document.querySelector(".todos .todo-input");
 const todoList = document.querySelector(".todo-list");
 
+const todos = [];
+
 function handleTodoSubmit(event){
     event.preventDefault();
     const newTodo = todoInput.value;
+    todos.push(newTodo);
     todoInput.value = "";
+    saveTodos();
     paintTodos(newTodo);
+}
+
+function saveTodos(){
+    localStorage.setItem("todos", JSON.stringify(todos));
 }
 
 function deleteTodo(event){
