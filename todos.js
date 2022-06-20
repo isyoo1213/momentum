@@ -1,6 +1,6 @@
 const todoForm = document.querySelector(".todos");
 const todoInput = document.querySelector(".todos .todo-input");
-const todoList = document.querySelector(".todos .todo-list");
+const todoList = document.querySelector(".todo-list");
 
 function handleTodoSubmit(event){
     event.preventDefault();
@@ -9,15 +9,25 @@ function handleTodoSubmit(event){
     paintTodos(newTodo);
 }
 
-function paintTodos(newTodo){
-    const li = document.createElement("li");
-    const strong = document.createElement("strong");
-    const button = document.createElement("button");
-    strong.innerText = newTodo;
-    button.innerText = "❌";
-    li.appendChild(strong);
-    li.appendChild(button);
-    todoList.appendChild(li);
+function deleteTodo(event){
+    // console.log(event.target.parentElement.innerText);
+    const deleteLi = event.target.parentElement;
+    deleteLi.remove();
 }
-console.log(todoForm);
+
+function paintTodos(newTodo){
+    if(newTodo == ""){
+    } else {
+        const li = document.createElement("li");
+        const strong = document.createElement("strong");
+        strong.innerText = newTodo;
+        const button = document.createElement("button");
+        button.innerText = "❌";
+        button.addEventListener("click", deleteTodo);
+        li.appendChild(strong);
+        li.appendChild(button);
+        todoList.appendChild(li);
+    }
+
+}
 todoForm.addEventListener("submit", handleTodoSubmit);
