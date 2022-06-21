@@ -1,8 +1,10 @@
 const todoForm = document.querySelector(".todos");
 const todoInput = document.querySelector(".todos .todo-input");
 const todoList = document.querySelector(".todo-list");
+const TODOS_KEY = "todos";
 
 const todos = [];
+
 
 function handleTodoSubmit(event){
     event.preventDefault();
@@ -14,7 +16,7 @@ function handleTodoSubmit(event){
 }
 
 function saveTodos(){
-    localStorage.setItem("todos", JSON.stringify(todos));
+    localStorage.setItem(TODOS_KEY, JSON.stringify(todos));
 }
 
 function deleteTodo(event){
@@ -38,4 +40,22 @@ function paintTodos(newTodo){
     }
 
 }
+// Localstorage에서 Array로 가져온 item들 확인하는 방법1
+// function sayHello(item){
+//     console.log("this is turn of", item);
+// }
+
 todoForm.addEventListener("submit", handleTodoSubmit);
+
+const savedTodos = localStorage.getItem(TODOS_KEY);
+
+if(savedTodos != null){
+    const parsedTodos = JSON.parse(savedTodos);
+    // console.log(savedTodos);
+    // console.log(parsedTodos);
+    // 방법1
+    // parsedTodos.forEach(sayHello);
+    //방법2
+    // parsedTodos.forEach((item)=>console.log("this is turn of ", item));
+    parsedTodos.forEach((item)=>paintTodos(item));
+}
