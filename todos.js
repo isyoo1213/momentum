@@ -3,7 +3,7 @@ const todoInput = document.querySelector(".todos .todo-input");
 const todoList = document.querySelector(".todo-list");
 const TODOS_KEY = "todos";
 
-const todos = [];
+let todos = [];
 
 
 function handleTodoSubmit(event){
@@ -57,5 +57,6 @@ if(savedTodos != null){
     // parsedTodos.forEach(sayHello);
     //방법2
     // parsedTodos.forEach((item)=>console.log("this is turn of ", item));
+    todos = parsedTodos;
     parsedTodos.forEach((item)=>paintTodos(item));
 }
