@@ -9,10 +9,17 @@ let todos = [];
 function handleTodoSubmit(event){
     event.preventDefault();
     const newTodo = todoInput.value;
-    todos.push(newTodo);
     todoInput.value = "";
-    saveTodos();
-    paintTodos(newTodo);
+    const newTodoObj = {
+        text : newTodo,
+        id : Date.now()
+    }
+    if(newTodoObj.text != ""){
+        todos.push(newTodoObj);
+        paintTodos(newTodoObj);
+        saveTodos();
+    }
+    
 }
 
 function saveTodos(){
@@ -22,15 +29,18 @@ function saveTodos(){
 function deleteTodo(event){
     // console.log(event.target.parentElement.innerText);
     const deleteLi = event.target.parentElement;
+    todos = todos.filter((todo) => todo.id != parseInt(deleteLi.id));
     deleteLi.remove();
+    saveTodos();
 }
 
-function paintTodos(newTodo){
-    if(newTodo == ""){
+function paintTodos(newTodoObj){
+    if(newTodoObj.text == ""){
     } else {
         const li = document.createElement("li");
+        li.id = newTodoObj.id;
         const strong = document.createElement("strong");
-        strong.innerText = newTodo;
+        strong.innerText = newTodoObj.text;
         const button = document.createElement("button");
         button.innerText = "❌";
         button.addEventListener("click", deleteTodo);
@@ -38,8 +48,8 @@ function paintTodos(newTodo){
         li.appendChild(button);
         todoList.appendChild(li);
     }
-
 }
+
 // Localstorage에서 Array로 가져온 item들 확인하는 방법1
 // function sayHello(item){
 //     console.log("this is turn of", item);
